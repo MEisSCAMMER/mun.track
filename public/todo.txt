@@ -1,1 +1,8 @@
-No todos (yay)
+- pause big timers (+mods: space -> pause, enter -> next speaker)
+- south sudan/bosnia fixes
+- fix chad bug
+- more keymaps:
+    - k -> pause/play
+    - D -> clear all speakers (matches with lowercase d)
+- remap function?
+

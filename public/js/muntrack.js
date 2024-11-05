@@ -21,7 +21,7 @@ const VERSION = "1.0.1";
 let countryList = ["Afghanistan", "Aland Islands", "Albania", "Algeria", "American Samoa",
     "Andorra", "Angola", "Anguilla", "Antarctica", "Antigua and Barbuda", "Argentina", "Armenia",
     "Aruba", "Australia", "Austria", "Azerbaijan", "Bahamas", "Bahrain", "Bangladesh", "Barbados",
-    "Belarus", "Belgium", "Belize", "Benin", "Bermuda", "Bhutan", "Bolivia", "Bosnia and Herzegovina",
+    "Belarus", "Belgium", "Belize", "Benin", "Bermuda", "Bhutan", "Bolivia", "Bosnia", "Bosnia and Herzegovina",
     "Botswana", "Brazil", "British Indian Ocean Territory", "Brunei",
     "Bulgaria", "Burkina Faso", "Burundi", "Cambodia", "Cameroon", "Canada", "Cape Verde", "Cayman Islands",
     "Central African Republic", "Chad", "Chile", "China", "Christmas Island", "Cocos (Keeling) Islands",
@@ -46,7 +46,7 @@ let countryList = ["Afghanistan", "Aland Islands", "Albania", "Algeria", "Americ
     "Rwanda", "Saint Helena", "Saint Kitts and Nevis", "Saint Lucia", "Saint Pierre and Miquelon",
     "Saint Vincent and the Grenadines", "Samoa", "San Marino", "Sao Tome and Principe", "Saudi Arabia", "Senegal",
     "Serbia", "Seychelles", "Sierra Leone", "Singapore", "Slovakia", "Slovenia", "Solomon Islands",
-    "Somalia", "South Africa", "Spain", "Sri Lanka", "Sudan",
+    "Somalia", "South Africa", "South Sudan", "Spain", "Sri Lanka", "Sudan",
     "Suriname", "Svalbard", "Swaziland", "Sweden", "Switzerland", "Syria", "Taiwan",
     "Tajikistan", "Tanzania", "Thailand", "Timor-Leste", "Togo", "Tonga",
     "Trinidad and Tobago", "Tunisia", "Turkey", "Turkmenistan", "Tuvalu", "Uganda",
@@ -777,7 +777,7 @@ function findCountry(input) {
         ld = levenshtein(input, countryList[i]);
         if (ld < min) {
             min = ld;
-            country = countryList[i];
+            country = countryList[i]==="Bosnia" ? "Bosnia and Herzegovina" : countryList[i];
         }
     }
 
