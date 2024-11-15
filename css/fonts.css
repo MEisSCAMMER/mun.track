@@ -1,55 +1,55 @@
 @font-face {
     font-family: iosevka;
-    src: url(/public/iosevka/Iosevka-Regular.ttf) format("truetype");
+    src: url(/iosevka/Iosevka-Regular.ttf) format("truetype");
     font-style: normal;
     font-weight: 400;
 }
 
 @font-face {
     font-family: iosevka;
-    src: url(/public/iosevka/Iosevka-Italic.ttf) format("truetype");
+    src: url(/iosevka/Iosevka-Italic.ttf) format("truetype");
     font-style: italic;
     font-weight: 400;
 }
 
 @font-face {
     font-family: iosevka;
-    src: url(/public/iosevka/Iosevka-SemiBold.ttf) format("truetype");
+    src: url(/iosevka/Iosevka-SemiBold.ttf) format("truetype");
     font-style: normal;
     font-weight: 700;
 }
 
 @font-face {
     font-family: iosevka;
-    src: url(/public/iosevka/Iosevka-SemiBoldItalic.ttf) format("truetype");
+    src: url(/iosevka/Iosevka-SemiBoldItalic.ttf) format("truetype");
     font-style: italic;
     font-weight: 700;
 }
 
 @font-face {
     font-family: "Helvetica Neue";
-    src: url(/public/iosevka/HelveticaNeue-01.ttf);
+    src: url(/iosevka/HelveticaNeue-01.ttf);
     font-style: normal;
     font-weight: 400;
 }
 
 @font-face {
     font-family: "Helvetica Neue";
-    src: url(/public/iosevka/HelveticaNeue-Italic-03.ttf);
+    src: url(/iosevka/HelveticaNeue-Italic-03.ttf);
     font-style: italic;
     font-weight: 400;
 }
 
 @font-face {
     font-family: "Helvetica Neue";
-    src: url(/public/iosevka/HelveticaNeue-Bold-02.ttf);
+    src: url(/iosevka/HelveticaNeue-Bold-02.ttf);
     font-style: normal;
     font-weight: 700;
 }
 
 @font-face {
     font-family: "Helvetica Neue";
-    src: url(/public/iosevka/HelveticaNeue-BoldItalic-04.ttf);
+    src: url(/iosevka/HelveticaNeue-BoldItalic-04.ttf);
     font-style: italic;
     font-weight: 700;
 }

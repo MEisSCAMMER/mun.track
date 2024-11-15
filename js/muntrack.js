@@ -16,7 +16,7 @@
 // along with mun.track. If not, see <http://www.gnu.org/licenses/>.
 //noinspection JSUnresolvedReference
 
-const VERSION = "1.0.1";
+const VERSION = "1.1.0";
 
 let countryList = ["Afghanistan", "Aland Islands", "Albania", "Algeria", "American Samoa",
     "Andorra", "Angola", "Anguilla", "Antarctica", "Antigua and Barbuda", "Argentina", "Armenia",
@@ -26,7 +26,7 @@ let countryList = ["Afghanistan", "Aland Islands", "Albania", "Algeria", "Americ
     "Bulgaria", "Burkina Faso", "Burundi", "Cambodia", "Cameroon", "Canada", "Cape Verde", "Cayman Islands",
     "Central African Republic", "Chad", "Chile", "China", "Christmas Island", "Cocos (Keeling) Islands",
     "Colombia", "Comoros", "Congo", "DR Congo", "Democratic Republic of the Congo", "Cook Islands", "Costa Rica",
-    "Cote D'Ivoire", "Croatia", "Cuba", "Cyprus", "Czechia", "Denmark", "Djibouti", "Dominica",
+    "Cote D'Ivoire", "Croatia", "Cuba", "Cyprus", "Czechia", "Czech Republic", "Denmark", "Djibouti", "Dominica",
     "Dominican Republic", "Ecuador", "Egypt", "El Salvador", "Equatorial Guinea", "Eritrea", "Estonia",
     "Ethiopia", "Falkland Islands", "Faroe Islands", "Fiji", "Finland", "France", "French Guiana",
     "French Polynesia", "French Southern Territories", "Gabon", "Gambia", "Georgia", "Germany", "Ghana", "Gibraltar",
@@ -66,6 +66,9 @@ let bigTimer = null;
 let mcTimer1 = null; //(m)od (c)aucus
 let modSpeakerTime = null;
 let modMode = false;
+let modPaused = false;
+let bigTimerMode = false;
+let bigTimerPaused = false;
 
 let list = 0;
 let quorum = null;
@@ -201,9 +204,8 @@ $(document).ready(function () {
 
 function compareTimes(time1, time2) {
     //check if times are in mm:ss format
-    if (!time1.match(/^\d{1,2}:\d{2}$/) || !time2.match(/^\d{1,2}:\d{2}$/)) {
-        return NaN;
-    }
+    let rgx = /^\d{1,2}:\d{2}$/;
+    if (!time1.match(rgx) || !time2.match(rgx)) return NaN;
 
     let time1Arr = time1.split(":");
     let time2Arr = time2.split(":");
@@ -214,18 +216,8 @@ function compareTimes(time1, time2) {
 
 function keydownHandler(event) {
     if (event.which === 13) { //enter
-        let command = $("#command").val();
-        $("#command").val("");
-        process(command);
-    } else if (event.which === 32 && !isPrompt) { //spacebar
-        if(!modMode) {
-            if (!timer) {
-                timer = setInterval(tick, 1000);
-            } else {
-                clearInterval(timer);
-                timer = null;
-            }
-        } else {
+        let cmd = $("#command").val();
+        if(modMode && cmd === "") {
             if($("#total-time").html() === "0:00") return;
             clearInterval(mcTimer1);
             $("#speaker-time").html(modSpeakerTime);
@@ -236,6 +228,34 @@ function keydownHandler(event) {
             $("#speaker-time").css("color", "white");
             mcTimer1 = null;
             mcTimer1 = setInterval(modTick, 1000);
+        } else {
+            $("#command").val("");
+            process(cmd);
+        }
+
+    } else if (event.which === 32 && !isPrompt) { //spacebar
+        if(bigTimerMode) {
+            if(!bigTimerPaused) {
+                if($("#timer").html() === "0:00") return;
+                clearInterval(bigTimer);
+                bigTimer = null;
+            } else bigTimer = setInterval(bigTick, 1000);
+            bigTimerPaused = !bigTimerPaused;
+        } else if(modMode) {
+            if(!modPaused) {
+                if($("#timer").html() === "0:00") return;
+                clearInterval(mcTimer1);
+                // clearInterval(tim)
+                mcTimer1 = null;
+            } else mcTimer1 = setInterval(modTick, 1000);
+            modPaused = !modPaused;
+        } else {
+            if (!timer) {
+                timer = setInterval(tick, 1000);
+            } else {
+                clearInterval(timer);
+                timer = null;
+            }
         }
 
         $("#command").val("");
@@ -252,6 +272,7 @@ function keydownHandler(event) {
         }
         isPrompt = false;
         if(modMode) modMode = false;
+        if(bigTimerMode) bigTimerMode = false;
         callback = null;
         $(this).val("");
         print("ready");
@@ -353,7 +374,7 @@ function process(command) {
         return;
     }
 
-    switch ($.trim(command.toLowerCase())) {
+    switch ($.trim(command)) {
         case "about": case "version":
             about();
             break;
@@ -373,6 +394,10 @@ function process(command) {
         case "d": case "del": case "delete":
             prompt("delete? (q to exit)", deleter);
             break;
+        case "D": case "deleteall":
+            //clear speakers
+            prompt("sure?", deleteAll, "y");
+            break;
         case "e": case "extend":
             extend();
             break;
@@ -388,6 +413,9 @@ function process(command) {
         case "i": case "insert":
             prompt("insert?", insert);
             isCountryPrompt = true;
+            break;
+        case "k": case "space":
+            keydownHandler({which: 32}); //simulate spacebar
             break;
         case "m": case "mod":
             prompt("set time to?", mod, "5:00");
@@ -413,11 +441,8 @@ function process(command) {
         case "se": case "setext": case "setexts": case "setextensions":
             prompt("set extensions to?", setExtensions, extensions[list]);
             break;
-        case "space":
-            keydownHandler({which: 32}); //simulate spacebar
-            break;
         case "t": case "timer":
-            prompt("set timer to? (mm:ss)", startTimer, "5:00");
+            prompt("set timer to? (mm or mm:ss)", startTimer, "5:00");
             break;
         case "v": case "vote":
             vote();
@@ -450,7 +475,8 @@ function checkTime(time) {
 }
 
 function startTimer(time) {
-    if (!checkTime(time)) return;
+    if(time.match(/^\d+$/)) time += ":00";
+    else if (!checkTime(time)) return;
 
     $("#timer").html(time);
     $("#timer").dialog("open");
@@ -458,11 +484,13 @@ function startTimer(time) {
     $("#command").focus();
 
     clearInterval(bigTimer);
+    bigTimerMode = true;
     bigTimer = setInterval(bigTick, 1000);
 }
 
 function mod(time) {
-    if (!checkTime(time)) return;
+    if(time.match(/^\d+$/)) time += ":00";
+    else if (!checkTime(time)) return;
 
     clearInterval(mcTimer1);
     $("#total-time").html(time);
@@ -478,8 +506,10 @@ function enterMod(speakerTime) {
     }
     modSpeakerTime = speakerTime;
     modMode = true;
+    modPaused = false;
 
-    let totalTimes = $("#total-time").html().split(":");
+    let modTimer = $("#total-time").html();
+    let totalTimes = modTimer.split(":");
     let speakerTimes = speakerTime.split(":");
     if(totalTimes[0] < speakerTimes[0] || (totalTimes[0] === speakerTimes[0] && totalTimes[1] < speakerTimes[1])) {
         print("invalid speaker time: must be less than total time");
@@ -492,7 +522,9 @@ function enterMod(speakerTime) {
     $("#command").focus();
 
     clearInterval(mcTimer1);
-    keydownHandler({which: 32}); //simulate spacebar (reset timer color)
+    keydownHandler({which: 14});
+    setTimeout(function() {}, 100);
+    keydownHandler({which: 14}); //simulate enter (reset timer color)
     mcTimer1 = setInterval(modTick, 1000);
 }
 
@@ -618,10 +650,14 @@ function boot() {
 
 function add(input) {
     if (input !== "quit" && input !== "q") {
-        countries[list].push(findCountry(input));
-        generateList();
+        if(input.length < 3) {
+            prompt("too short. add something else? (q to exit)", add);
+        } else {
+            countries[list].push(findCountry(input));
+            generateList();
+            prompt("add? (q to exit)", add);
+        }
 
-        prompt("add? (q to exit)", add);
         isCountryPrompt = true;
     }
 }
@@ -633,8 +669,8 @@ function extend() {
         $("#info-extensions").html((rextensions - 1) + "x " + extensionTimes[list] + "s");
         $("#info-time").html((parseInt($("#info-time").html()) + extensionTimes[list]) + " seconds");
     } else {
-        $("#info-extensions").css("color", "red");
-        print("no remaining extensions!")
+        $("#info-extensions").css("color", "#a20");
+        print("no remaining extensions!");
     }
     clearTimeout(timer);
     timer = null;
@@ -718,6 +754,13 @@ function deleter(input) {
         generateList();
 
         prompt("delete? (q to exit)", deleter);
+    }
+}
+
+function deleteAll(input) {
+    if(input === "yes" || input === "y") {
+        countries[list] = [];
+        generateList();
     }
 }
 

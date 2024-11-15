@@ -2,7 +2,7 @@
 
 mun.track is a Model UN committee dashboard.
 
-![mun.track dashboard](public/dashboard.png)
+![mun.track dashboard](dashboard.png)
 
 ### Try it out!
 
@@ -29,7 +29,7 @@ screen. The learning curve is a bit steep, but
 * the command-line is the only interface discreet enough to not disrupt your
   delegates.
 
-To run a command, simply type its name and press `&lt;enter>`. Then follow any
+To run a command, simply type its name and press `<enter>`. Then follow any
 relevant prompts.
 
 ### Available commands
@@ -46,6 +46,7 @@ relevant prompts.
 | `change`    | `c`      | Change delegate in current speakers list             |
 | `flip`      | `f`      | Flip delegates in current speakers list              |
 | `delete`    | `d`      | Remove delegates from current speakers list          |
+| `deleteall` | `D`      | Remove all delegates from current speakers list      |
 | `next`      | `n`      | Advance speakers list                                |
 | `prev`      | `p`      | Return to previous delegate in speakers list         |
 | `switch`    | `s`      | Switch between rolling/general/voting speakers list  |
@@ -53,7 +54,8 @@ relevant prompts.
 | `extend`    | `e`      | Extend current delegate's speaking time              |
 | `timer`     | `t`      | Start large timer (for caucuses)                     |
 | `mod`       | `m`      | Enter a moderated caucus                             |
-| `spacebar`  | n/a      | Start/stop speaking timer                            |
+| `spacebar`  | n/a      | Start/stop timers                                    |
+| `enter`     | n/a      | Advance to next speaker in moderated caucus          |
 
 ### Display configuration
 
@@ -78,10 +80,10 @@ line.
   * On some platforms, the large timer would not function after being closed previously. This has been fixed.
   * The commandline no longer has that attention-grabbing blue outline.
 * A new functionality has been added for moderated caucuses.
+* More commands have been added, such as the `deleteall` command.
 
 Release notes:
-* **v1.0.0**: Initial release; everything mentioned above is implemented.
-* **v1.0.1**: Changed typeface to Helvetica Neue and changed "Czech Republic" to "Czechia" in country list.
+(moved to [CHANGELOG](CHANGELOG.md))
 
 ## Contributing
 
