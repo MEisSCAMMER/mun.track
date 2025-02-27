@@ -11,3 +11,12 @@ Changelog:
     * The spacebar now pauses all timers, including mod and large timers. To move to the next speaker in a mod, use enter.
     * Made the "help" dialog more readable.
     * "Czech Republic" was re-added to the country list. ("Czechia" still works)
+
+* **v1.2.0**: Several updates:
+    * Fixed some margins on the header.
+    * Backend overhaul; commands are now stored in a dictionary.
+    * This was done to help with the creation of the new command `remap`, which allows you to remap commands to different keys.
+      * (That one's not actually done yet though.)
+    * What IS done yet though is the new command `w`/`whip`, which starts a whip: essentially an infinite series of 
+big timers.
+    * Timers now shake for about a second when done instead of indefinitely.

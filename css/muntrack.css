@@ -39,7 +39,7 @@ h1 {
 
 #title-wrap {
 	padding: 0 7px 7px;
-	margin: 0 20px 20px;
+	margin: 0 30px 20px;
 	background-color: #111;
 	border: 1px solid black;
 	border-top: 0;
@@ -247,6 +247,31 @@ table code {
 
 #timer-wrapper {
 	border-radius: 7px;
+}
+
+#remap div {
+	font-size: 25px;
+	column-count: 2;
+	text-align: left;
+}
+
+#remap div ul {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+#remap div ul li {
+	list-style-type: none;
+}
+
+li a {
+	cursor: pointer;
+	font-weight: normal;
+}
+
+.mono {
+	font-family: Iosevka, monospace;
 }
 
 .ui-widget {
