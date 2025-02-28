@@ -20,3 +20,4 @@ Changelog:
     * What IS done yet though is the new command `w`/`whip`, which starts a whip: essentially an infinite series of 
 big timers.
     * Timers now shake for about a second when done instead of indefinitely.
+* **v1.2.1**: Fixed a bug for whips which caused issues when the timer was reset while paused.

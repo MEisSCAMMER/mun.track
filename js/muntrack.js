@@ -283,6 +283,7 @@ function keydownHandler(event) {
             $("#timer").html(whipSpeakerTime);
             bigTimer = null;
             bigTimer = setInterval(bigTick, 1000);
+            bigTimerPaused = false;
         } else {
             $("#command").val("");
             process(cmd);
