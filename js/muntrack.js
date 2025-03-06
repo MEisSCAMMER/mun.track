@@ -16,7 +16,7 @@
 // along with mun.track. If not, see <http://www.gnu.org/licenses/>.
 //noinspection JSUnresolvedReference
 
-const VERSION = "1.1.1";
+const VERSION = "1.2.1";
 
 let countryList = ["Afghanistan", "Aland Islands", "Albania", "Algeria", "American Samoa", "Andorra", "Angola",
     "Anguilla", "Antarctica", "Antigua and Barbuda", "Argentina", "Armenia", "Aruba", "Australia", "Austria",
@@ -89,7 +89,7 @@ const lambdas = [
     () => prompt("set title to?", setTitle, $("#title").html()),
     () => prompt("set quorum to?", setQuorum, parseInt($("#info-quorum").html())),
     () => prompt("set timer to? (mm or mm:ss)", startTimer, "5:00"),
-    () => prompt("speaking time?", whip, "0:30")
+    () => prompt("speaking time? (mm:ss or ss)", whip, "30")
 ];
 
 const keymaps = {
@@ -791,6 +791,7 @@ function prev() {
 }
 
 function whip(input) {
+    if(input.match(/^\d+$/)) input = "0:" + input;
     bigTimerWhip = true;
     whipSpeakerTime = input;
     startTimer(whipSpeakerTime);
