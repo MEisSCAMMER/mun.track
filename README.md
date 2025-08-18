@@ -98,4 +98,6 @@ Essentially, should you choose to modify mun.track and make available a website
 hosting your modified version, all users must be provided with the opportunity
 to obtain your modified source code.
 
+The two font files, Inter and Iosevka, are also freely licensed under the SIL Open Font license.
+
 [agpl]: http://www.gnu.org/licenses/agpl-3.0.html

@@ -16,7 +16,7 @@
 // along with mun.track. If not, see <http://www.gnu.org/licenses/>.
 //noinspection JSUnresolvedReference
 
-const VERSION = "1.2.1";
+const VERSION = "1.2.2";
 
 let countryList = ["Afghanistan", "Aland Islands", "Albania", "Algeria", "American Samoa", "Andorra", "Angola",
     "Anguilla", "Antarctica", "Antigua and Barbuda", "Argentina", "Armenia", "Aruba", "Australia", "Austria",
@@ -327,6 +327,7 @@ function keydownHandler(event) {
             mcTimer1 = null;
         }
         isPrompt = false;
+        if(bigTimerPaused) bigTimerPaused = false;
         if(modMode) modMode = false;
         if(bigTimerMode) bigTimerMode = false;
         callback = null;
