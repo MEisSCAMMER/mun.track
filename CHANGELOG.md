@@ -22,3 +22,4 @@ big timers.
     * Timers now shake for about a second when done instead of indefinitely.
 * **v1.2.1**: Fixed a bug for whips which caused issues when the timer was reset while paused.
 * **v1.2.2**: Changed default typeface to Inter, which unlike Helvetica is open-source.
+* **v1.2.3**: Fixed a bug which under rare circumstances caused the mod speaker time to turn red permanently.

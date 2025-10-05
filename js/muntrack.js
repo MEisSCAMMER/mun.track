@@ -16,7 +16,7 @@
 // along with mun.track. If not, see <http://www.gnu.org/licenses/>.
 //noinspection JSUnresolvedReference
 
-const VERSION = "1.2.2";
+const VERSION = "1.2.3";
 
 let countryList = ["Afghanistan", "Aland Islands", "Albania", "Algeria", "American Samoa", "Andorra", "Angola",
     "Anguilla", "Antarctica", "Antigua and Barbuda", "Argentina", "Armenia", "Aruba", "Australia", "Austria",
@@ -482,6 +482,8 @@ function mod(time) {
 }
 
 function enterMod(speakerTime) {
+    //reset timer color if it was previously exited while red
+    $("#speaker-time").css("color", "white");
     if (!checkTime(speakerTime)) {
         if(speakerTime.match(/^\d{2}$/)) {
             print("ready");
@@ -880,7 +882,7 @@ function retrieve() {
     let obj = JSON.parse($.cookie("data"));
     if (obj) {
         if (obj.version !== VERSION) {
-            update();
+            update(); //TODO: do something about this. no sense deleting cookies for some random minor update
             return;
         }
         quorum = obj.quorum;
