@@ -881,8 +881,8 @@ function levenshtein(a, b) {
 function retrieve() {
     let obj = JSON.parse($.cookie("data"));
     if (obj) {
-        if (obj.version !== VERSION) {
-            update(); //TODO: do something about this. no sense deleting cookies for some random minor update
+        if (majorVersion(obj.version) !== majorVersion(VERSION)) {
+            update();
             return;
         }
         quorum = obj.quorum;
@@ -901,10 +901,15 @@ function retrieve() {
     }
 }
 
+function majorVersion(versionNum) {
+    let splitVersion = versionNum.split('.');
+    return splitVersion[0] + '.' + splitVersion[1];
+}
+
 function store() {
     let obj = {
         quorum: quorum, times: times, countries: countries, current: current, extensions: extensions,
-        extensionTimes: extensionTimes, mobileCode: mobileCode, title: title, list: list, version: VERSION
+        extensionTimes: extensionTimes, mobileCode: mobileCode, title: title, list: list, version: majorVersion(VERSION)
     };
 
     $.cookie("data", JSON.stringify(obj), {expires: 7000});
